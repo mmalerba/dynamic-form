@@ -43,6 +43,7 @@ export class DynamicFormTerminal {
   template: `
     <p>{{ field()().property(LABEL)() }}</p>
     @for (child of field(); track child) {
+      <!-- 🔪 Could be undefined according to the type -->
       @if (child) {
         @if (isArrayForm(child)) {
           <dynamic-form-group [field]="child" />
@@ -98,6 +99,7 @@ export class DynamicForm {
     computation: computeDataModel,
   });
 
+  // 🔪 Need to use explicit `unknown` to avoid infinite recursion in the type system
   form = form<unknown>(this.model, createSchema(this.spec));
 
   structured = computed(() => computeStructuredData(this.form));

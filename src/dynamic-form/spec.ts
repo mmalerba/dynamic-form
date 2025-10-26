@@ -32,6 +32,7 @@ export const LABEL = reducedProperty<string, string>(
   () => '',
 );
 
+// 🔪 Requires recursive schema
 export function createSchema(spec: Signal<FieldSpec>) {
   const dynamicSchema = schema((p) => {
     applyWhenValue(
@@ -60,6 +61,7 @@ export function createSchema(spec: Signal<FieldSpec>) {
   return dynamicSchema;
 }
 
+// 🔪 Lots of asserts needed
 export function lookupPath(spec: FieldSpec, state: FieldState<unknown>): FieldSpec {
   const keys = illegallyGetPathKeys(state);
   for (const key of keys) {
@@ -84,10 +86,12 @@ function assertTerminal(spec: FieldSpec): asserts spec is TerminalFieldSpec {
 
 function assertNumber(key: string | number): asserts key is number {
   if (typeof key !== 'number') {
+    // 🔪 `pathKeys` contains the array keys as numbers, so we can't even do this
     // throw Error('non numeric key!');
   }
 }
 
+// 🔪 `pathKeys` not exposed in API
 function illegallyGetPathKeys(state: FieldState<unknown>): (number | string)[] {
   return (state as any).structure.pathKeys();
 }

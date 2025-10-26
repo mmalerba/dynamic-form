@@ -5,6 +5,7 @@ export type TerminalDataModel = string;
 export type GroupDataModel = (TerminalDataModel | GroupDataModel)[];
 export type DynamicDataModel = TerminalDataModel | GroupDataModel;
 
+// 🔪 Complicated computation
 export function computeDataModel(
   src: FieldSpec,
   prev?: { source: FieldSpec; value: DynamicDataModel },
@@ -27,6 +28,7 @@ export function computeDataModel(
           : { source: prevItSrc, value: prevItValue };
       return computeDataModel(it, newPrev);
     });
+    // 🔪 Transferring the magic tracking symbol.
     const newArr = Object.assign([], prevValue, items);
     newArr.length = items.length;
     return newArr;
@@ -59,6 +61,7 @@ export function computeStructuredData(f: FieldTree<unknown>): unknown {
   }
 }
 
+// 🔪 Should `Array.isArray` work directly on the proxy?
 export function isArrayForm(f: FieldTree<unknown>): f is FieldTree<unknown[]> {
   return Array.isArray(f().value());
 }

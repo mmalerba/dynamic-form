@@ -30,6 +30,7 @@ interface AddInfo {
     <button (click)="add()">add</button>
 
     <h3>Reorder:</h3>
+    <!-- 🔪 Tracking forcing us to use more layers of object. -->
     <!--
       TODO: Tracking doesn't work right. Need to use {value: ''} for terminal so it can get a special tracking symbol
     -->
